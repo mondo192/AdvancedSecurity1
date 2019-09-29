@@ -14,10 +14,7 @@ class Application(tk.Frame):
         display = tk.Entry(self.master, textvariable=self.screen, justify=tk.RIGHT)
         display.grid(columnspan=4)
 
-        # btn = tk.Button(self.master, text='C', command=self.cmd('C'))
-        # btn.grid(row=1, column=0, columnspan=3, rowspan=1, sticky='nsew')
-
-        for index, digit in enumerate('C/789*456-123+0.='):
+        for index, digit in enumerate('789/456*123-C0=+'):
             btn = tk.Button(self.master, text=digit, command=self.cmd(digit))
             btn.grid(row=2 + index // 4, column=index % 4, sticky='nsew')
 
@@ -32,13 +29,18 @@ class Application(tk.Frame):
         elif digit is 'C':
             self.buffer.clear()
             self.screen.set(self.buffer)
+            self.screen.set('0')
 
         if digit is '=':
-            self.buffer.remove('=')
-            # convert list into a string and store the evaluation in result
-            result = eval(''.join(self.buffer))
-            self.screen.set(result)
-            self.buffer.clear()
+            try:
+                self.buffer.remove('=')
+                # convert list into a string and store the evaluation in result
+                result = eval(''.join(self.buffer))
+                self.screen.set(result)
+                self.buffer.clear()
+            except SyntaxError:
+                self.buffer.clear()
+                self.screen.set('Error')
 
 
 if __name__ == '__main__':
