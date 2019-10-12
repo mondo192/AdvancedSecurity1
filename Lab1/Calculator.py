@@ -70,7 +70,7 @@ class Application(tk.Frame):
             except SyntaxError:
                 # empty the contents of the 'bad' buffer
                 self.buffer.clear()
-                # output an error message to the calculator screen
+                # ciphertext an error message to the calculator screen
                 self.screen.set('Error')
 
 
