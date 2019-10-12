@@ -2,63 +2,47 @@ import os
 
 
 class CaesarCipher:
-    def __init__(self):
-        while True:
-            try:
-                self.file_path = 'data/plaintext/message.txt'
-                # self.file_path = self.get_file()
-                with open(self.file_path) as file:
-                    self.file = file.read()
-                    filename = os.path.basename(self.file_path)
-                    print(f'{filename} was found!')
-                    break
-            except OSError as e:
-                print(e)
-        while True:
-            try:
-                self.alphabet_path = 'data/alphabet/english.txt'
-                with open(self.alphabet_path) as alphabet:
-                    self.alphabet = alphabet.read()
-                    filename = os.path.basename(self.alphabet_path)
-                    print(f'{filename} was found!')
-                    break
-            except OSError as e:
-                print(e)
+    def __init__(self, m, a):
+        try:
+            self.message = self.get_data(file_path=m)
+            self.alphabet = self.get_data(file_path=a)
+        except OSError as e:
+            print(e)
 
-        # self.key = self.brute_force_key(self.file.upper())
-        self.ciphertext = self.encrypt(4, self.file)
-        self.plaintext = self.decrypt(4, self.file)
-        print(self.ciphertext)
-        print(self.plaintext)
+    @staticmethod
+    def get_data(file_path):
+        with open(file_path) as file:
+            data = file.read()
+            filename = os.path.basename(file_path)
+            print(f'{filename} was found!')
+        return data
 
-
-    def get_data(self):
-        pass
-
-    def brute_force_key(self, ciphertext):
+    def brute_force_key(self):
+        ciphertext = self.message
         print(f'\n\t\t {ciphertext} KEY')
-        for key in range(len(self.alphabet)):
+        for k in range(len(self.alphabet)):
             translated = ''
             for c in ciphertext:
                 if c.isalpha():
                     num = self.alphabet.find(c)
-                    num = num - key
+                    num = num - k
                     if num < 0:
                         num = num + len(self.alphabet)
                     translated = translated + self.alphabet[num]
                 else:
                     translated = translated + c
-            print(f'\t{key} \t {translated}', end='')
-        key = int(input('\nEnter the key: '))
-        return key
+            print(f'\t{k} \t {translated}', end='')
+        k = input('Enter the key that you found: ')
+        return k
 
-    def encrypt(self, key, plaintext):
+    def encrypt(self, k):
+        plaintext = self.message
         ciphertext = ''
         for i in range(len(plaintext)):
             p = plaintext[i].upper()
             if p in self.alphabet:
                 # index of shifted letter within alphabet
-                x = (key + self.alphabet.index(p)) % 26
+                x = (k + self.alphabet.index(p)) % 26
                 # map this shifted index to a cipher
                 c = self.alphabet[x % 26]
             else:
@@ -68,12 +52,13 @@ class CaesarCipher:
             ciphertext += c
         return ciphertext
 
-    def decrypt(self, key, ciphertext):
+    def decrypt(self, k):
+        ciphertext = self.message
         plaintext = ''
         for i in range(len(ciphertext)):
             c = ciphertext[i]
             if c in self.alphabet:
-                x = (self.alphabet.index(c) - key) % 26
+                x = (self.alphabet.index(c) - k) % 26
                 p = self.alphabet[x % 26]
             else:
                 p = c
@@ -82,4 +67,27 @@ class CaesarCipher:
 
 
 if __name__ == '__main__':
-    caesar = CaesarCipher()
+    while True:
+        message = input('Enter path to file or (q) to quit: ')
+        alphabet = input('Enter path to alphabet or (q) to quit: ')
+        if message in 'qQ' or alphabet in 'qQ':
+            break
+        caesar = CaesarCipher(m=message, a=alphabet)
+        if caesar:
+            while True:
+                menu = input('Caesar Cipher\n'
+                             '(B)rute force key\n'
+                             '(E)ncrypt message\n'
+                             '(D)ecrypt message\n\n'
+                             'Enter your choice (B/E/D): ')
+                if menu in 'bB':
+                    key = caesar.brute_force_key()
+                    print(f'You found the key value of {key}')
+                elif menu in 'eE':
+                    key = int(input('Enter your encryption key: '))
+                    caesar.encrypt(k=key)
+                elif menu in 'dD':
+                    key = int(input('Enter the decryption key: '))
+                    caesar.decrypt(k=key)
+                elif menu in 'qQ':
+                    break
