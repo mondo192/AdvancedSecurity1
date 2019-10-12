@@ -24,24 +24,28 @@ def validate_key():
         print("Incorrect usage. Usage: python caesar <key>")
         return False
 
-    # assign keyword to 'key' variable and validate format (alpha chars only)
+    # assign keyword to 'key' variable and validate format (numeric chars only)
     if not sys.argv[1].isdigit():
         print("Invalid key. Use only numeric characters.")
         return False
-    else:
+    else: # convert cmd line arguemnet to an integer value for shift key
         return int(sys.argv[1])
 
 
 def encrypt(plaintext, key):
     ciphertext = ''
     for c in plaintext:
+        # not in alphabet or is a space character therefore dont encrypt
         if not c.isalpha() or c.isspace():
+            # append to buffer variable
             ciphertext += c
-        else:
+        else: # is in alphabet therfore do encryption on character by character basis
             if c.isupper():
+                # find constrained ascii value for given character with the shift key added
                 c_ascii = ((ord(c) - ord('A')) + key) % 26 + ord('A')
+                # converted ascii value to a character and append to buffer
                 ciphertext += chr(c_ascii)
-            else:
+            else: # letter if lowercase
                 c_ascii = ((ord(c) - ord('a')) + key) % 26 + ord('a')
                 ciphertext += chr(c_ascii)
     return ciphertext
@@ -54,7 +58,9 @@ def decrypt(ciphertext, key):
             plaintext += p
         else:
             if p.isupper():
+                # find constrained ascii value for given character with the shift key subtracted
                 p_ascii = ((ord(p) - ord('A')) - key) % 26 + ord('A')
+                # converted ascii value to a character and append to buffer
                 plaintext += chr(p_ascii)
             else:
                 p_ascii = ((ord(p) - ord('a')) - key) % 26 + ord('a')
