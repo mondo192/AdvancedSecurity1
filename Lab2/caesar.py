@@ -10,6 +10,14 @@ def write_data_to_disk(data):
         f.close()
 
 
+def read_data_from_disk():
+    workfile = input('\nEnter the path to the file for reading: ')
+    with open(workfile) as f:
+        plaintext = f.read()
+        f.close()
+    return plaintext
+
+
 def validate_key():
     # confirm exactly two arguments entered on command line (program name and keyword)
     if len(sys.argv) != 2:
@@ -68,19 +76,15 @@ if __name__ == "__main__":
             'Enter your choice: '
         ))
         if menu == 1:
-            workfile = input('Enter the path to the file for encryption: ')
-            with open(workfile) as f:
-                plaintext = f.read()
-                encrypted = encrypt(plaintext, key)
-                print('\nEncrypting...\n"' + plaintext + '"\n\nKey: ' + str(key) + '\n\nCiphertext...\n' + encrypted)
-                write_data_to_disk(encrypted)
+            plaintext = read_data_from_disk()
+            encrypted = encrypt(plaintext, key)
+            print('\nEncrypting...\n"' + plaintext + '"\n\nKey: ' + str(key) + '\n\nCiphertext...\n' + encrypted)
+            write_data_to_disk(encrypted)
         elif menu == 2:
-            file = input('\nEnter the path to the file for decryption: ')
-            with open(file) as f:
-                ciphertext = f.read()
-                decrypted = decrypt(ciphertext, key)
-                print('\nDecrypting...\n"' + ciphertext + '"\n\nKey: ' + str(key) + '\n\nPlaintext...\n' + decrypted)
-                write_data_to_disk(decrypted)
+            ciphertext = read_data_from_disk()
+            decrypted = decrypt(ciphertext, key)
+            print('\nDecrypting...\n"' + ciphertext + '"\n\nKey: ' + str(key) + '\n\nPlaintext...\n' + decrypted)
+            write_data_to_disk(decrypted)
         elif menu == 3:
             print('Exiting...')
             running = False
