@@ -1,21 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="85423450-393a-4029-addb-b7c0b1a40c00" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/AdvancedSecurity1.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Lab2/caesar.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Lab2/vigenere.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab2/CaesarCipher.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab2/VigenereCipher.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab2/data/alphabet/english.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab2/data/ciphertext/1.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab2/data/plaintext/message.txt" beforeDir="false" />
-    </list>
+    <list default="true" id="85423450-393a-4029-addb-b7c0b1a40c00" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
