@@ -17,10 +17,10 @@ class VigenereCipher:
             print(f'{filename} was found!')
         return data
 
-    def encrypt(self, key):
+    def encrypt(self, k):
         plaintext = self.message
-        key_length = len(key)
-        key_as_int = [ord(i) for i in key]
+        key_length = len(k)
+        key_as_int = [ord(i) for i in k]
         plaintext_int = [ord(i) for i in plaintext]
         ciphertext = ''
         for i in range(len(plaintext_int)):
@@ -28,10 +28,10 @@ class VigenereCipher:
             ciphertext += chr(value + 65)
         return ciphertext
 
-    def decrypt(self, key):
+    def decrypt(self, k):
         ciphertext = self.message
-        key_length = len(key)
-        key_as_int = [ord(i) for i in key]
+        key_length = len(k)
+        key_as_int = [ord(i) for i in k]
         ciphertext_int = [ord(i) for i in ciphertext]
         plaintext = ''
         for i in range(len(ciphertext_int)):
@@ -55,10 +55,12 @@ if __name__ == '__main__':
                              '(Q)uit\n\n'
                              'Enter your choice (E/D/Q): ')
                 if menu in 'eE':
-                    key = int(input('Enter your encryption key: '))
-                    vigenere.encrypt(k=key)
+                    key = input('Enter your encryption key: ')
+                    ciphertext = vigenere.encrypt(k=key)
+                    print(f'Ciphertext: {ciphertext}')
                 elif menu in 'dD':
-                    key = int(input('Enter the decryption key: '))
-                    vigenere.decrypt(k=key)
+                    key = input('Enter the decryption key: ')
+                    plaintext = vigenere.decrypt(k=key)
+                    print(f'Plaintext: {plaintext}')
                 elif menu in 'qQ':
                     break
