@@ -78,8 +78,9 @@ if __name__ == '__main__':
                 menu = input('Caesar Cipher\n'
                              '(B)rute force key\n'
                              '(E)ncrypt message\n'
-                             '(D)ecrypt message\n\n'
-                             'Enter your choice (B/E/D): ')
+                             '(D)ecrypt message\n'
+                             '(Q)uit\n\n'
+                             'Enter your choice (B/E/D/Q): ')
                 if menu in 'bB':
                     key = caesar.brute_force_key()
                     print(f'You found the key value of {key}')
