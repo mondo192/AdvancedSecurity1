@@ -47,14 +47,56 @@ def decrypt(private, message):
     return plain
 
 
+def miller_rabin_test(n, k=128):
+    # Prime Test, returns True when prime
+    if n == 2 or n == 3:
+        return True
+    if n <= 1 or n % 2 == 0:
+        return False
+    s = 0
+    r = n - 1
+    while r & 1 == 0:
+        s += 1
+        r //= 2
+    for _ in range(k):
+        a = randint(2, n - 1)
+        x = pow(a, r, n)
+        if x != 1 and x != n - 1:
+            j = 1
+            while j < s and x != n - 1:
+                x = pow(x, 2, n)
+                if x == 1:
+                    return False
+                j += 1
+            if x != n - 1:
+                return False
+    return True
+
+
+def prompt():
+    while True:
+        try:
+            number = int(input('Enter a number (must be prime): '))
+            if miller_rabin_test(number):
+                return number
+            else:
+                print('Not prime. Try again')
+        except ValueError:
+            print('Oops! That was no valid number. Try again...')
+            continue
+
+
 if __name__ == '__main__':
-    num1 = 17
-    num2 = 11
-    public, private = generate_keypair(num1, num2)
-    print(f'Public key: {public}, Private key: {private}')
-    message = input('Enter a message: ')
-    encrypted_message = encrypt(public, message)
-    decrypted_message = decrypt(private, encrypted_message)
+    num1 = prompt()
+    num2 = prompt()
+
+    pub_key, priv_key = generate_keypair(num1, num2)
+    print(f'Public key: {pub_key}, Private key: {priv_key}')
+
+    data = input('Enter a message (to encrypt): ')
+
+    encrypted_message = encrypt(pub_key, data)
+    decrypted_message = decrypt(priv_key, encrypted_message)
 
     print('Encryted message is:', ''.join(str(e) for e in encrypted_message))
-    print('Decryped message id:', ''.join(str(d) for d in decrypted_message))
+    print('Decryped message is:', ''.join(str(d) for d in decrypted_message))
